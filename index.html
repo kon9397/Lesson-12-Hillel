@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Lesson 12</title>
+</head>
+<body>
+    
+
+    <script>
+        function Student(firstName, lastName, birthYear) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.birthYear = birthYear;
+            this.marks = new Array(30);
+            this.visits = new Array(30);
+            this.indexVisits = 0;
+            this.indexMarks = 0;
+        }
+
+        Student.prototype.present = function() {
+            if(this.visits.length !== this.indexVisits) {
+                this.visits[this.indexVisits] = true;
+                this.indexVisits++;
+            }
+        }
+
+        Student.prototype.absent = function() {
+            if(this.visits.length !== this.indexVisits) {
+                this.visits[this.indexVisits] = false;
+                this.indexVisits++;
+            }
+        }
+
+        Student.prototype.mark = function(mark) {
+            if(this.marks.length !== this.indexMarks) {
+                if(mark > 10) {
+                    return 'Нельзя передавать оценку больше 10';
+                } else {
+                    this.marks[this.indexMarks] = mark;
+                    this.indexMarks++;
+                }
+                
+            }
+        }
+
+        Student.prototype.summary = function() {
+            let markAverage = this.marks.reduce(function(accum, item) {
+                accum += item;
+                return accum;
+            }, 0);
+            let visitAverage = this.visits.reduce(function(accum, item) {
+                accum += Number(item);
+                return accum;
+            }, 0)
+            markAverage = markAverage / this.marks.length;
+            visitAverage = visitAverage / this.visits.length;
+
+            if(markAverage > 9 && visitAverage > 0.9) {
+                return 'Ути какой молодчинка!';
+            } else if(markAverage > 9 || visitAverage > 0.9) {
+                return 'Норм, но можно лучше';
+            } else {
+                return 'Редиска!';
+            }
+
+        }
+
+        let ivan = new Student('Ivan', 'Petrov', 1995);
+        let kostya = new Student('Kostya', 'Sologub', 1995);
+        let andrey = new Student('Andrey', 'Ivanchuk', 1993);
+
+        for(let i = 0; i < 30; i++) {
+            ivan.mark(Math.round(Math.random() * 10));
+            kostya.mark(10);
+            andrey.mark(Math.round(Math.random() * 10));
+            Math.round(Math.random() * 1) === 1 ? ivan.present() : ivan.absent();
+            kostya.present();
+            andrey.present();
+        }
+
+        console.log(ivan.marks);
+        console.log(kostya.marks);
+        console.log(andrey.marks);
+
+        console.log(ivan.visits);
+        console.log(kostya.visits);
+        console.log(andrey.visits);
+
+        console.log(ivan.summary());
+        console.log(kostya.summary());
+        console.log(andrey.summary());
+    </script>
+</body>
+</html>
