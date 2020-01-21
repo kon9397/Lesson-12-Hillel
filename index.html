@@ -16,34 +16,40 @@
             this.birthYear = birthYear;
             this.marks = new Array(30);
             this.visits = new Array(30);
-            this.indexVisits = 0;
-            this.indexMarks = 0;
         }
 
         Student.prototype.present = function() {
-            if(this.visits.length !== this.indexVisits) {
-                this.visits[this.indexVisits] = true;
-                this.indexVisits++;
+            for(let i = 0; i < this.visits.length; i++) {
+                if(typeof this.visits[i] === 'undefined') {
+                    this.visits[i] = true;
+                    break;
+                }
             }
+            
         }
 
         Student.prototype.absent = function() {
-            if(this.visits.length !== this.indexVisits) {
-                this.visits[this.indexVisits] = false;
-                this.indexVisits++;
+            for(let i = 0; i < this.visits.length; i++) {
+                if(typeof this.visits[i] === 'undefined') {
+                    this.visits[i] = false;
+                    break;
+                }
             }
         }
 
         Student.prototype.mark = function(mark) {
-            if(this.marks.length !== this.indexMarks) {
                 if(mark > 10) {
                     return 'Нельзя передавать оценку больше 10';
                 } else {
-                    this.marks[this.indexMarks] = mark;
-                    this.indexMarks++;
+                    for(let i = 0; i < this.marks.length; i++) { 
+                        if(typeof this.marks[i] === 'undefined') {
+                            this.marks[i] = mark;
+                            break;
+                        }
+                    }
                 }
                 
-            }
+            
         }
 
         Student.prototype.summary = function() {
